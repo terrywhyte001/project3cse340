@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Vehicle inventory MVC application for CSE 340",
   "main": "app.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
@@ -19,5 +20,6 @@
     "nodemon": "^3.0.1"
   }
 }
+
 
  
