@@ -2,7 +2,7 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL, // from Render Postgres
+    connectionString: process.env.DATABASE_URL, // Render Postgres connection string
     ssl: { rejectUnauthorized: false }          // required for Render
 });
 
