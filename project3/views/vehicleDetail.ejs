@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Vehicle Inventory</h1>
+  </header>
+
+  <main class="container">
+    <div class="image">
+      <img src="<%= vehicle.image || '/images/placeholder.jpg' %>" alt="<%= vehicle.make %> <%= vehicle.model %>">
+    </div>
+    <div class="details">
+      <h2><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h2>
+      <p><strong>Price:</strong> $<%= vehicle.price.toLocaleString() %></p>
+      <p><strong>Mileage:</strong> <%= vehicle.mileage.toLocaleString() %> miles</p>
+      <p><strong>Color:</strong> <%= vehicle.color %></p>
+      <p><strong>Description:</strong> <%= vehicle.description || 'No description available.' %></p>
+    </div>
+  </main>
+
+  <footer>
+    &copy; <%= new Date().getFullYear() %> Vehicle Inventory
+  </footer>
+</body>
+</html>
