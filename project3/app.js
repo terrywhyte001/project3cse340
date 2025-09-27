@@ -14,7 +14,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// ================= ROUTES =================
+
+// Homepage
+app.get('/', (req, res) => {
+  res.render('index', { title: 'Vehicle Inventory' });
+});
+
+// List of vehicles
+app.get('/vehicles', vehicleController.vehicleList);
+
+// Vehicle details by ID
 app.get('/vehicles/:id', vehicleController.vehicleDetail);
 
 // 404 - Not Found
@@ -32,4 +42,3 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
