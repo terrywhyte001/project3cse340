@@ -13,14 +13,27 @@
 
   <main class="container">
     <div class="image">
-      <img src="<%= vehicle.image || '/images/placeholder.jpg' %>" alt="<%= vehicle.make %> <%= vehicle.model %>">
+      <img 
+        src="<%= vehicle.image && vehicle.image.trim() !== '' ? vehicle.image : '/images/placeholder.jpg' %>" 
+        alt="<%= vehicle.make %> <%= vehicle.model %>">
     </div>
+
     <div class="details">
       <h2><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h2>
-      <p><strong>Price:</strong> $<%= vehicle.price.toLocaleString() %></p>
-      <p><strong>Mileage:</strong> <%= vehicle.mileage.toLocaleString() %> miles</p>
-      <p><strong>Color:</strong> <%= vehicle.color %></p>
-      <p><strong>Description:</strong> <%= vehicle.description || 'No description available.' %></p>
+      <p><strong>Price:</strong> 
+        $<%= vehicle.price ? vehicle.price.toLocaleString() : 'N/A' %>
+      </p>
+      <p><strong>Mileage:</strong> 
+        <%= vehicle.mileage ? vehicle.mileage.toLocaleString() : 'N/A' %> miles
+      </p>
+      <p><strong>Color:</strong> 
+        <%= vehicle.color || 'N/A' %>
+      </p>
+      <p><strong>Description:</strong> 
+        <%= vehicle.description && vehicle.description.trim() !== '' 
+            ? vehicle.description 
+            : 'No description available.' %>
+      </p>
     </div>
   </main>
 
