@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Management</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .message { padding: 10px; margin-bottom: 15px; border-radius: 5px; }
+    .success { background-color: #d4edda; color: #155724; }
+    .error { background-color: #f8d7da; color: #721c24; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 10px 0; }
+    a { text-decoration: none; color: #007bff; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <h1>Vehicle Management</h1>
+
+  <% if (message) { %>
+    <div class="message <%= message.startsWith('✅') ? 'success' : 'error' %>">
+      <%= message %>
+    </div>
+  <% } %>
+
+  <h2>Actions</h2>
+  <ul>
+    <li><a href="/classifications/add">➕ Add New Classification</a></li>
+    <li><a href="/vehicles/add">➕ Add New Vehicle</a></li>
+    <li><a href="/vehicles/list">📋 View Vehicles List</a></li>
+  </ul>
+
+</body>
+</html>

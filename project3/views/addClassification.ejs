@@ -1,0 +1,9 @@
+<h1>Add Classification</h1>
+<% if (message) { %>
+  <p><%= message %></p>
+<% } %>
+<form method="POST">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" value="<%= name %>" required>
+  <button type="submit">Add Classification</button>
+</form>
