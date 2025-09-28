@@ -1,22 +1,15 @@
-const db = require('../db/connection');
+const mongoose = require('mongoose');
 
-async function addVehicle(vehicle) {
-  const sql = `INSERT INTO vehicles 
-      (classification_id, make, model, year, price)
-      VALUES (?, ?, ?, ?, ?)`;
-  const [result] = await db.execute(sql, [
-    vehicle.classification_id,
-    vehicle.make,
-    vehicle.model,
-    vehicle.year,
-    vehicle.price
-  ]);
-  return result;
-}
+const vehicleSchema = new mongoose.Schema({
+  classification: { type: String, required: true },
+  make: { type: String, required: true },
+  model: { type: String, required: true },
+  year: { type: Number, required: true },
+  price: { type: Number, required: true },
+  description: { type: String },
+  image: { type: String }
+}, { timestamps: true });
 
-async function getVehicles() {
-  const [rows] = await db.execute(`SELECT * FROM vehicles`);
-  return rows;
-}
+const Vehicle = mongoose.model('Vehicle', vehicleSchema);
 
-module.exports = { addVehicle, getVehicles };
+module.exports = Vehicle;

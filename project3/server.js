@@ -1,28 +1,33 @@
-require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose');
+const session = require('express-session');
 const vehicleRoutes = require('./routes/vehicleRoutes');
+const viewUtils = require('./utils/viewUtils');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => console.error('❌ MongoDB connection error:', err));
-
-// View engine setup
+// EJS setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Middleware
+// Static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session setup
+app.use(session({
+  secret: 'mySecretKey',
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Make view utilities globally available
+app.locals.formatCurrency = viewUtils.formatCurrency;
+app.locals.formatMileage = viewUtils.formatMileage;
+app.locals.capitalize = viewUtils.capitalize;
+app.locals.truncateText = viewUtils.truncateText;
 
 // Routes
 app.use('/vehicles', vehicleRoutes);
@@ -38,7 +43,6 @@ app.use((err, req, res, next) => {
   res.status(500).render('error', { message: 'Something went wrong. Please try again later.' });
 });
 
-// Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

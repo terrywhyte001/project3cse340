@@ -1,17 +1,17 @@
-// project3/model/inventoryModel.js
-const pool = require('../db/connection');
+const Vehicle = require('./vehicle'); // your Mongoose Vehicle model
 
-async function getVehicleById(inv_id) {
+// Get a vehicle by its ID
+async function getVehicleById(id) {
   try {
-    const sql = 'SELECT * FROM inventory WHERE inv_id = $1';
-    const values = [inv_id];
-    const result = await pool.query(sql, values);
-    return result.rows[0];
+    // Mongoose auto-casts string to ObjectId
+    const vehicle = await Vehicle.findById(id).populate('classification').lean();
+    return vehicle;
   } catch (err) {
-    console.error('Database error (getVehicleById):', err); // log actual error
-    throw err; // let controller handle it
+    console.error('Database error (getVehicleById):', err);
+    throw err; // Controller can handle
   }
 }
 
 module.exports = { getVehicleById };
+
 

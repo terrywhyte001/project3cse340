@@ -1,25 +1,34 @@
-const Classification = require('../models/classificationModel');
+const Classification = require('../model/classification'); // make sure path is correct
 
+// Render Add Classification Form
 async function showAddClassification(req, res) {
-  res.render('addClassification', { message: req.session.message || '', name: '' });
+  res.render('add-classification', {
+    message: req.session.message || '',
+    sticky: {}
+  });
   req.session.message = null;
 }
 
+// Handle Add Classification POST
 async function postAddClassification(req, res) {
   const name = req.body.name?.trim();
 
   if (!name) {
     req.session.message = '❌ Classification name is required';
-    return res.render('addClassification', { name, message: req.session.message });
+    return res.render('add-classification', { sticky: { name }, message: req.session.message });
   }
 
   try {
-    await Classification.addClassification(name);
+    // Use Mongoose to save a new classification
+    const classification = new Classification({ name });
+    await classification.save();
+
     req.session.message = '✅ Classification added successfully';
-    res.redirect('/management');
+    res.redirect('/vehicles/management');
   } catch (err) {
+    // Handle duplicate names or other errors
     req.session.message = `❌ Error: ${err.message}`;
-    res.render('addClassification', { name, message: req.session.message });
+    res.render('add-classification', { sticky: { name }, message: req.session.message });
   }
 }
 
